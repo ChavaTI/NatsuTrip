@@ -34,7 +34,6 @@ CREATE TABLE usuario (
     noTargetaCredito VARCHAR(20),
     CURP VARCHAR(13) NOT NULL,
     imagen_name VARCHAR(100),
-    imagen BLOB NOT NULL,
     PRIMARY KEY(idUsuario)
 );
 
@@ -46,7 +45,6 @@ CREATE TABLE paquete (
     descripcion VARCHAR(250) NOT NULL,
     total FLOAT NOT NULL,
     imagen_name VARCHAR(100) NOT NULL,
-    imagen BLOB NOT NULL,
     PRIMARY KEY(idPaquete)
 );
 
@@ -60,7 +58,6 @@ CREATE TABLE hotel (
     ciudad VARCHAR(20) NOT NULL,
     estrellas int NOT NULL,
     imagen_name VARCHAR(100) NOT NULL,
-    imagen BLOB NOT NULL,
     PRIMARY KEY(idHotel)
 );
 
@@ -71,7 +68,6 @@ CREATE TABLE habitacion (
     tipo VARCHAR(2) NOT NULL,
     idHotel INT NOT NULL,
     imagen_name VARCHAR(255) NOT NULL,
-    imagen BLOB NOT NULL,
     PRIMARY KEY(idHabitacion)
 );
 
@@ -92,7 +88,6 @@ CREATE TABLE aerolinea (
     destino VARCHAR(20) NOT NULL,
     costo FLOAT NOT NULL,
     imagen_name VARCHAR(100) NOT NULL,
-    imagen BLOB NOT NULL,
     PRIMARY KEY(idAerolinea)
 );
 

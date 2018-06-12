@@ -1,0 +1,25 @@
+extends ./commons/layaout.pug
+
+
+block conteiner
+    section(class="row")
+        div(class="col-2")
+            div(class="row")
+                div(class="col-12")
+                    img(src="/public/img/Usuarios/user.png" alt="")
+            div(class="row mt-3")
+                div(class="offset-5 col-6")
+                    button(type="button" name="button" class="btn btn-secondary") Editar imagen
+        div(class=" offset-2 col-5")
+            div(class="jumbotron textUserData")
+                p!= nombre
+                p!= apaterno
+                p!= amaterno
+                p!= fechaNac
+                p!= tel
+                p!= email
+                p!= sexo
+                p!= dir
+                p!= estado
+                p!= ciudad
+                button(onclick="reenviar('./editar')" type="button" name="button" class="btn btn-primary") Editar

@@ -1,0 +1,41 @@
+extends ./commons/layaout.pug
+
+
+block conteiner
+    section(class="row")
+        div(class="col-2")
+            div(class="row")
+                div(class="col-12")
+                    img(src="/public/img/Usuarios/user.png" alt="")
+            div(class="row mt-3")
+                div(class="offset-5 col-6")
+                    button(type="button" name="button" class="btn btn-secondary") Editar imagen
+        div(class=" offset-2 col-5")
+            div(class="jumbotron textUserData")
+                form(class="" action="/perfil:D" method="post")
+                    div(class="form-group")
+                        label(for="name") Nombre:
+                        input(type="text" name="name" value="" class="form-control" id="name" required)
+                        label(for="apaterno") Apellido Paterno:
+                        input(type="text" name="apaterno" value="" class="form-control" id="apaterno" required)
+                        label(for='amaterno') Apellido Materno:
+                        input(type="text" name="amaterno" value="" class="form-control" id="amaterno" required)
+                        label(for="date") Fecha de Nacimiento:
+                        input(type="date" class="form-control" name="date" id="date")
+                        label(for="tel") Telefono: 
+                        input(type="tel" name="tel" class="form-control" id="tel")
+                        label(for="email") Correo electronico:
+                        input(type="email" name="email" id="email" class="form-control")
+                        label(for="sex") Sexo:
+                        select(name="sex" id="sex" class="custom-select")
+                            option(value="M") Masculino: 
+                            option(value="F") Femenino: 
+                        label(for="street") Calle:
+                        input(type="text" name="street" id="street" class="form-control")
+                        label(for="num") Numero:
+                        input(type="number" name="num" id="num" class="form-control")
+                        label(for="estado") Estado:
+                        input(type="text" name="estado" id="estado" class="form-control")
+                        label(for="ciudad") Ciudad:
+                        input(type="text" name="ciudad" id="ciudad" class="form-control")
+                        input(type="submit" name="" value="Aceptar" class="btn btn-primary")

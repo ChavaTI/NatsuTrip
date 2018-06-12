@@ -1,0 +1,40 @@
+h2{
+    font-size: 30px;
+  }
+  
+  .fondo{
+    background-image: url("../img/fondo.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  .header{
+    background-color:rgba(0, 0, 0, 0.2);
+    border-radius: 15px
+  }
+  
+  .textCenter{
+    text-align: center;
+  }
+  
+  .salesBox{
+    background-color: #ffa002;
+  
+  }
+  
+  .whitetext{
+    color: #ffffff;
+  
+  }
+  
+  .textSize1{
+    font-size: 18px;
+  }
+  
+  .textUserData{
+    font-weight: bold;
+  }
+  
+  .footer{
+    background-color: rgb(24, 117, 255);
+  }
+  

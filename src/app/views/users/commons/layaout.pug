@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        meta(http-equiv="X-UA-Compatible", content="ie=edge")
+        link(rel="stylesheet", href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css")
+        link(rel="stylesheet", href="/public/css/master.css")
+        title NatsuTrip
+    body(class="fondo")
+        main(class="container")
+            header(class="row header textCenter")
+                div(class="col-12 mb-5")
+                    h1 NatsuTrip
+            nav(class="navbar navbar-expand-sm bg-dark navbar-dark mb-5")
+                ul(class = "navbar-nav")
+                    li(class="nav-item active mr-sm-5")
+                        a(href="#" class="nav-link" onclick="reenviar('/user')") Inicio
+                    li(class="nav-item active mr-sm-5")
+                        a(href="#" class="nav-link" onclick="reenviar('/perfilGet')") Mi perfil
+                    li(class="nav-item active mr-sm-5")
+                        a(href="#" class="nav-link" onclick="reenviar('/paquetes')") Mis paquetes
+                    li(class="nav-item active mr-sm-5")
+                        a(href="#" class="nav-link" onclick="reenviar('/login')") Iniciar Sesion
+                    form(action="" class="form-inline ml-5")
+                        input(type="text" class="form-control mr-sm-2" placeholder="Buscar paquetes")
+                        button(class="btn btn-success" type="submit") Buscar
+            block conteiner
+
+            footer(class="row")
+                div(class="col-12 footer textCenter whitetext")
+                    p Redes Sociales.
+                    div(div class="row")
+                        div(class="offset-4 col-4")
+                            a(href="")
+                                img(src="/public/img/facebook.png", alt="" class="mr-3")
+                            a(href="")
+                                img(src="/public/img/instagram.png", alt="" class="mr-3")
+                            a(href="")    
+                                img(src="/public/img/twitter.png", alt="" class="mr-3")
+                            small.
+                                    Creado por
+                                    Salvador Hernández López.
+                                    Jose Esaul Espinoza Flores.
+                                    Raul Eduardo Espitia Rojas.
+        script(src="/public/js/nav.js")

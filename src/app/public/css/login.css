@@ -1,0 +1,14 @@
+.fondo{
+    background-image: url("../img/fondo.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  .header{
+    background-color:rgba(0, 0, 0, 0.2);
+    border-radius: 15px
+  }
+  
+  .textCenter{
+    text-align: center;
+  }
+  

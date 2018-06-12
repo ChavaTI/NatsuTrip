@@ -1,0 +1,160 @@
+extends ./commons/layaout.pug
+
+
+block conteiner
+    section(class="row")
+        aside(class="col-4")
+            div(class="row")
+                div(class="col-12 salesBox")
+                    div(class="row")
+                        div(class="col-12 whitetext pt-2 pb-2 mb-2")
+                            h2(class="textSize1") Reserva tu estancia en los mejores destinos.
+                    hr(size="10" style="color: #0056b2;")
+                    div(class="row")
+                        div(class="col-12")
+                            form(class="" action="index.html" method="post")
+                                div(class="form-group")
+                                    label(class="whitetext" for="lugar") ¿A dónde quieres viajar?
+                                    input(type="text" class="form-control" id="lugar")
+                                    label(class="whitetext" for="dateIn") ¿Cuándo viajas?
+                                    br
+                                    label(class="whitetext" for="dateIn") Lllegada
+                                    input(type="date" class="form-control" id="dateIn")
+                                    label(class="whitetext" for="dateOut") Salida
+                                    input(type="date" class="form-control" id="dateOut")
+                                    br
+                                    label(class="whitetext") Hotel
+                                    br
+                                    label(class="whitetext" for="dateIn") Categoria
+                                    br
+
+                                    div(class="form-check form-check-inline")
+                                        label(class="form-check-label")
+                                            img(src="/public/img/Usuarios/5Star.png" alt="")
+                                            input(type="checkbox" class="form-check-input" value="")
+                                    div(class="form-check form-check-inline")
+                                        label(class="form-check-label")
+                                            img(src="/public/img/Usuarios/5Star.png" alt="")
+                                            input(type="checkbox" class="form-check-input" value="")
+                                    div(class="form-check form-check-inline")
+                                        label(class="form-check-label")
+                                            img(src="/public/img/Usuarios/5Star.png" alt="")
+                                            input(type="checkbox" class="form-check-input" value="")
+                                    div(class="form-check form-check-inline")
+                                        label(class="form-check-label")
+                                            img(src="/public/img/Usuarios/5Star.png" alt="")
+                                            input(type="checkbox" class="form-check-input" value="")
+                                    div(class="form-check form-check-inline")
+                                        label(class="form-check-label")
+                                            img(src="/public/img/Usuarios/5Star.png" alt="")
+                                            input(type="checkbox" class="form-check-input" value="")
+                                    br
+                                    label(for="Hab" class="whitetext") Habitaciones
+                                    input(type="number" name="" value="0" id="Hab" class="form-control mb-3")
+                                    input(type="submit" name="" value="Buscar" class="btn btn-primary")
+        article(class="col-8")
+
+
+            div(class="row mb-5")
+                div(class="col-12")
+                    div(class="card")
+                        div(class="card-body textCenter")
+                            h2 ¡Conoce los destinos más populares!
+
+
+
+            div(class="row mb-5")
+                div(class="col-4")
+                    div(class="card")
+                        div(class="card-body ml-3")
+                            h4(class="card-title textCenter") Cancún
+                            img(src="/public/img/Usuarios/Cancun_s.jpg", alt="Cancún" class="img-thumbnail")
+                        div(class="card-footer")
+                            div(class="row")
+                                div(class="offset-md-3 col-3")
+                                    button(class="btn btn-primary") Conocer
+                div(class="col-4")
+                    div(class="card")
+                        div(class="card-body ml-3")
+                            h4(class="card-title textCenter") Acapulco
+                            img(src="/public/img/Usuarios/Acapulco_s.jpg", alt="Acapulco" class="img-thumbnail")
+                        div(class="card-footer")
+                            div(class="row")
+                                div(class="offset-md-3 col-3")
+                                    button(class="btn btn-primary") Conocer
+                div(class="col-4")
+                    div(class="card")
+                        div(class="card-body ml-3")
+                            h4(class="card-title textCenter") Mazatlán
+                            img(src="/public/img/Usuarios/Mazatlan_s.jpg", alt="Mazatlán" class="img-thumbnail")
+                        div(class="card-footer")
+                            div(class="row")
+                                div(class="offset-md-3 col-3")
+                                    button(class="btn btn-primary") Conocer
+            div(class="row mb-5")
+                div(class="col-12")
+                    div(class="card")
+                        div(class="card-body textCenter")
+                            h2 ¡Aprovecha exclusivas ofertas en hoteles!
+            div(class="row mb-5")
+                div(class="col-4")
+                    div(class="card")
+                        div(class="card-body ml-3")
+                            h4(class="card-title textCenter") RIU
+                            img(src="/public/img/Usuarios/RIU.jpg", alt="RIU" class="img-thumbnail")
+                        div(class="card-footer")
+                            div(class="row")
+                                div(class="offset-md-3 col-3")
+                                    button(class="btn btn-primary") Ver más
+                div(class="col-4")
+                    div(class="card")
+                        div(class="card-body ml-3")
+                            h4(class="card-title textCenter") Royal
+                            img(src="/public/img/Usuarios/Royal.jpg", alt="Royal" class="img-thumbnail")
+                        div(class="card-footer")
+                            div(class="row")
+                                div(class="offset-md-3 col-3")
+                                    button(class="btn btn-primary") Ver más
+                div(class="col-4")
+                    div(class="card")
+                        div(class="card-body ml-3")
+                            h4(class="card-title textCenter") Best Western
+                            img(src="/public/img/Usuarios/Mazatlan_s.jpg", alt="Best Western" class="img-thumbnail")
+                        div(class="card-footer")
+                            div(class="row")
+                                div(class="offset-md-3 col-3")
+                                    button(class="btn btn-primary") Ver más
+            div(class="row mb-5")
+                div(class="col-12")
+                    div(class="card")
+                        div(class="card-body textCenter")
+                            h2 ¡Encuentra vuelos baratos con las mejores aerolíneas!
+            div(class="row mb-5")
+                div(class="col-4")
+                    div(class="card")
+                        div(class="card-body ml-3")
+                            h4(class="card-title textCenter") Volaris
+                            img(src="/public/img/Usuarios/Volaris-Lareolinea.jpg", alt="Volaris" class="img-thumbnail")
+                        div(class="card-footer")
+                            div(class="row")
+                                div(class="offset-md-3 col-3")
+                                    button(class="btn btn-primary") Ver más
+                div(class="col-4")
+                    div(class="card")
+                        div(class="card-body ml-3")
+                            h4(class="card-title textCenter") Interjet
+                            img(src="/public/img/Usuarios/Interjet-Lareolinea.jpg", alt="Interjet" class="img-thumbnail")
+                        div(class="card-footer")
+                            div(class="row")
+                                div(class="offset-md-3 col-3")
+                                    button(class="btn btn-primary") Ver más
+                div(class="col-4")
+                    div(class="card")
+                        div(class="card-body ml-3")
+                            h4(class="card-title textCenter") Aeroméxico
+                            img(src="/public/img/Usuarios/Aeromexico-Lareolinea.jpg", alt="Aeroméxico" class="img-thumbnail")
+                        div(class="card-footer")
+                            div(class="row")
+                                div(class="offset-md-3 col-3")
+                                    button(class="btn btn-primary") Ver más                            
+                                    

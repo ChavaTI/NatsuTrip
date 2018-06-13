@@ -27,7 +27,21 @@ router.post('/',(req,res) => {
        }else{
            if(result.length > 0){
                 if(result[0].pass == pass){
-                    res.send('Hola admin');
+                    // Crear session
+                    req.session.idAdmin = result[0].idAdmin; 
+                    req.session.nombre = result[0].nombre;
+                    req.session.aPaterno = result[0].aPaterno;
+                    req.session.aMaterno = result[0].aMaterno;
+                    req.session.username = result[0].username;
+                    req.session.pass = result[0].pass;
+                    req.session.tipo = result[0].tipo;
+                    
+                    if(req.session.tipo == 1){
+                        res.redirect('/admin');
+                    }else if(req.session.tipo == 2){
+                        res.redirect('/root');
+                    }
+                    
                 }else{
                     res.render('./admin/login',{'mensaje' : 'La contraseña no coincide con el correo'});
                 }
@@ -39,10 +53,9 @@ router.post('/',(req,res) => {
        
    });
 
-
-
-    
 });
+
+
 
 
 module.exports = router;

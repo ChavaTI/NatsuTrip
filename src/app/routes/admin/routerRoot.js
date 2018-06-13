@@ -1,9 +1,9 @@
 const express = require('express');
-//const dbConnection = require('../../../config/dbConnection');
+const dbConnection = require('../../../config/dbConnection');
 
 const router = express.Router();
 
-//const conn = dbConnection();
+const conn = dbConnection();
 
 
 router.get('/',(req,res) => {
@@ -19,7 +19,27 @@ router.get('/paquetes',(req,res) => {
 });
 
 router.get('/hoteles',(req,res) => {
-    res.render('./admin/root/AdminHoteles')
+
+    var sql = 'SELECT * FROM hotel';
+
+    conn.query(sql, (err,result,fielt) => {
+        if(err){
+            res.send({
+                'code' : 400,
+                'faild' : 'error ocurred'
+            });
+        }else{
+            if(result.length > 0){
+                //Hay registros
+                res.render('./admin/root/AdminHoteles');
+            }else{
+                //No hay registros
+                res.render('./admin/root/AdminHoteles',{'result' : result});
+            }
+        }
+    });
+
+    
 });
 
 router.get('/aerolineas',(req,res) => {

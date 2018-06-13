@@ -1,0 +1,20 @@
+extends ./commons/layaout.pug
+
+
+block conteiner
+
+    article(class = 'row')
+        div(class = 'col-6 offset-3' )
+            div(class = 'card mb-5')
+                div(class = 'card-body')
+                    div(class = 'card-header text-center ')
+                        p Login
+                    div(class = 'card-body')
+                        form(action="/admin", method="post")
+                            div(class = 'form-gropu')
+                                input(type="email" placeholder='Email' name='email' class='form-control' required)
+                                input(type="password" placeholder='Constraseña' name='pass' class='form-control mt-2' required)
+                                input(type="submit", value="Login" class='btn btn-primary mt-2')
+                    div(class = 'card-footer text-center')
+                        p #{mensaje}
+

@@ -68,36 +68,74 @@ router.post('/hoteles/Agregar/Nuevo',(req,res) => {
     var ciudad = req.body.ciudad;
     var estrellas = parseInt(req.body.estrellas);
 
-    console.log(req.files);
+    
     if (!req.files) return res.status(400).send('No files were uploaded.');
 
-    var file = req.files.uploaded_image;
+    var file = req.files.uploadImage;
     var img_name=file.name;
 
     if(file.mimetype == "image/jpeg" ||file.mimetype == "image/png"||file.mimetype == "image/gif" ){
-        file.mv('public/imgUpload/'+file.name,(err) => {
+        file.mv('/home/salvador/Natsutrip/src/app/public/imgUpload/'+file.name,(err) => {
             if(err) return res.status(500).send(err); 
 
             var sql = 'INSERT INTO hotel(idHotel, nombreCadena, nombreHotel, calle, numero, estado, ciudad, estrellas, imagen_name) VALUES (NULL, ?, ?, ?, ?, ?, ?, ? ,?)';
 
-            conn.query(sql,[nombreCadena, nombreHotel, calle, numero, estado, ciudad, estrellas, 'public/imgUpload/'+file.name],(err,result,field) => {
+            conn.query(sql,[nombreCadena, nombreHotel, calle, numero, estado, ciudad, estrellas, '/public/imgUpload/'+file.name],(err,result,field) => {
                 if(err) return res.status(500).send(err);
                 console.log('add ' + result.affectedRows + ' rows');
-                res.redirect('/root/hoteles/Agregar/Nuevo');
+                res.redirect('/root/hoteles/1');
 
             });
         });
     }else{
-        res.render('./admin/root/AddHotel',{'mensaje':'No puede subir un archivo con este formato'});
+        res.render('./admin/root/AddHotel',{'mensaje':'No puede subir el archivo con este formato'});
 
     }
 });
 
 
 
-router.get('/hoteles/Editar/:idHotel',(req,res) => {
-    console.log(req.params.idHotel);
-    res.send('Editar');
+router.get('/hoteles/Editar/:idHotel/:nombreCadena/:nombreHotel/:calle/:numero/:estado/:ciudad/:estrellas/:imagen_name',(req,res) => {
+    
+    var idSplit = req.params.idHotel.split(':');
+    var idHotel = parseInt(idSplit[1]);
+
+    var nombreCadSplit = req.params.nombreCadena.split(':');
+    var nombreCadena = nombreCadSplit[1];
+
+    var nombreHotelSplit = req.params.nombreHotel.split(':');
+    var nombreHotel = nombreHotelSplit[1];
+
+    var calleSplit = req.params.calle.split(':');
+    var calle = calleSplit[1];
+
+    var numeroSplit = req.params.numero.split(':');
+    var numero = parseInt(numeroSplit[1]);
+
+    var estadoSplit = req.params.estado.split(':');
+    var estado = estadoSplit[1];
+
+    var ciudadSplit = req.params.ciudad.split(':');
+    var ciudad = ciudadSplit[1];
+
+    var estrellasSplit = req.params.estrellas.split(':');
+    var estrellas = parseInt(estrellasSplit[1]);
+
+    var imagen_nameSplit = req.params.imagen_name.split(':');
+    var imagen_name = imagen_nameSplit[1];
+
+    res.render('./admin/root/AddHotel',{
+        idHotel,
+        nombreCadena,
+        nombreHotel,
+        calle,
+        numero,
+        estado,
+        ciudad,
+        estrellas,
+        imagen_name : '/public/imgUpload/'+ imagen_name
+    });
+
 });
 
 router.get('/hoteles/Eliminar/:idHotel',(req,res) => {

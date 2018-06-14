@@ -25,7 +25,7 @@ block conteiner
                                     td #{result[i].calle} #{result[i].numero} , #{result[i].estado} #{result[i].ciudad}
                                     td #{result[i].estrellas}
                                     td #{result[i].imagen_name}
-                                    td #[button(class='btn btn-dark' onclick='reenviar("/root/hoteles/Editar/:' + result[i].idHotel + '")') Editar]
+                                    td #[button(class='btn btn-dark' onclick='reenviar("/root/hoteles/Editar/:' + result[i].idHotel + '/:'+ result[i].nombreCadena +'/:'+ result[i].nombreHotel +'/:'+ result[i].calle +'/:'+ result[i].numero +'/:'+ result[i].estado +'/:'+ result[i].ciudad +'/:'+ result[i].estrellas +'/:'+ result[i].imagen_name.split('/')[3] +'")') Editar]
                                     td #[button(class='btn btn-dark' onclick='reenviar("/root/hoteles/Eliminar/:' + result[i].idHotel + '")') Eliminar]
                     button(class = 'btn btn-primary' onclick='reenviar("/root/hoteles/Agregar/Nuevo")') Nuevo
 

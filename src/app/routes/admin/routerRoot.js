@@ -78,14 +78,30 @@ router.post('/hoteles/Agregar/Nuevo',(req,res) => {
         file.mv('/home/salvador/Natsutrip/src/app/public/imgUpload/'+file.name,(err) => {
             if(err) return res.status(500).send(err); 
 
-            var sql = 'INSERT INTO hotel(idHotel, nombreCadena, nombreHotel, calle, numero, estado, ciudad, estrellas, imagen_name) VALUES (NULL, ?, ?, ?, ?, ?, ?, ? ,?)';
+            
+            if(req.body.bandera == 'Editar'){
+                var sql = 'UPDATE hotel SET nombreCadena = ? ,nombreHotel = ?, calle = ? , numero = ? , estado= ? , ciudad = ? , estrellas = ? , imagen_name = ?  WHERE idHotel = ?;';
+                
+                conn.query(sql,[nombreCadena, nombreHotel, calle, numero, estado, ciudad, estrellas, '/public/imgUpload/'+file.name, req.body.idHotel],(err,result,field) => {
+                    if(err) return res.status(500).send(err);
 
-            conn.query(sql,[nombreCadena, nombreHotel, calle, numero, estado, ciudad, estrellas, '/public/imgUpload/'+file.name],(err,result,field) => {
+                    console.log('add ' + result.affectedRows + ' rows');
+                    res.redirect('/root/hoteles/1');
+
+                });
+
+            }else{
+                var sql = 'INSERT INTO hotel(idHotel, nombreCadena, nombreHotel, calle, numero, estado, ciudad, estrellas, imagen_name) VALUES (NULL, ?, ?, ?, ?, ?, ?, ? ,?)';
+
+                conn.query(sql,[nombreCadena, nombreHotel, calle, numero, estado, ciudad, estrellas, '/public/imgUpload/'+file.name],(err,result,field) => {
                 if(err) return res.status(500).send(err);
                 console.log('add ' + result.affectedRows + ' rows');
                 res.redirect('/root/hoteles/1');
 
             });
+            }
+
+            
         });
     }else{
         res.render('./admin/root/AddHotel',{'mensaje':'No puede subir el archivo con este formato'});
@@ -133,7 +149,8 @@ router.get('/hoteles/Editar/:idHotel/:nombreCadena/:nombreHotel/:calle/:numero/:
         estado,
         ciudad,
         estrellas,
-        imagen_name : '/public/imgUpload/'+ imagen_name
+        imagen_name : '/public/imgUpload/'+ imagen_name,
+        bandera : 'Editar'
     });
 
 });

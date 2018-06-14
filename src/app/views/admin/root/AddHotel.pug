@@ -11,6 +11,8 @@ block conteiner
                 div(class ='card-body')               
                     form(action="/root/hoteles/Agregar/Nuevo", method="post" enctype="multipart/form-data")
                         div(class = 'form-group')
+                            input(value = bandera style="visibility:hidden" name = 'bandera')
+                            input(value = idHotel style="visibility:hidden" name = 'idHotel')
                             input(type="text" placeholder='Cadena' name='nombreCadena' class='form-control' required value= nombreCadena)
                             input(type="text" placeholder='Hotel' name='nombreHotel' class='form-control' required value= nombreHotel)
                             input(type="text" placeholder='Calle' name='calle' class='form-control' required value= calle)

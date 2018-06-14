@@ -9,7 +9,7 @@ block conteiner
                 div(class='card-header text-center')
                     h1 Nuevo Hotel
                 div(class ='card-body')               
-                    form(action="/root/hoteles/Agregar/Nuevo", method="post")
+                    form(action="/root/hoteles/Agregar/Nuevo", method="post" enctype="multipart/form-data")
                         div(class = 'form-group')
                             input(type="text" placeholder='Cadena' name='nombreCadena' class='form-control' required)
                             input(type="text" placeholder='Hotel' name='nombreHotel' class='form-control' required)
@@ -25,5 +25,6 @@ block conteiner
                                 option(value="4") 4
                                 option(value="5") 5
                             input(type="file" class="form-control-file border" required)
+                            p #{mensaje}
                             input(type="submit", value="Agregar" class='btn btn-primary')
                             input(type="reset", value="Cancelar" class='btn btn-secundary')

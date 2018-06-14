@@ -67,6 +67,30 @@ router.post('/hoteles/Agregar/Nuevo',(req,res) => {
     var estado = req.body.estado;
     var ciudad = req.body.ciudad;
     var estrellas = parseInt(req.body.estrellas);
+
+    console.log(req.files);
+    if (!req.files) return res.status(400).send('No files were uploaded.');
+
+    var file = req.files.uploaded_image;
+    var img_name=file.name;
+
+    if(file.mimetype == "image/jpeg" ||file.mimetype == "image/png"||file.mimetype == "image/gif" ){
+        file.mv('public/imgUpload/'+file.name,(err) => {
+            if(err) return res.status(500).send(err); 
+
+            var sql = 'INSERT INTO hotel(idHotel, nombreCadena, nombreHotel, calle, numero, estado, ciudad, estrellas, imagen_name) VALUES (NULL, ?, ?, ?, ?, ?, ?, ? ,?)';
+
+            conn.query(sql,[nombreCadena, nombreHotel, calle, numero, estado, ciudad, estrellas, 'public/imgUpload/'+file.name],(err,result,field) => {
+                if(err) return res.status(500).send(err);
+                console.log('add ' + result.affectedRows + ' rows');
+                res.redirect('/root/hoteles/Agregar/Nuevo');
+
+            });
+        });
+    }else{
+        res.render('./admin/root/AddHotel',{'mensaje':'No puede subir un archivo con este formato'});
+
+    }
 });
 
 

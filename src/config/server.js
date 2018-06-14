@@ -3,6 +3,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const fileUpload = require('express-fileupload');
 const session = require('express-session');
+const busboy = require("then-busboy");
 
 
 const app = express();
@@ -14,6 +15,7 @@ app.set('views', path.join(__dirname, '../app/views'));
 
 // middlewares
 
+app.use(fileUpload());
 app.use(bodyParser.urlencoded({extended: false }));
 app.use(bodyParser.json());
 app.use('/public',express.static(path.join(__dirname, '../app/public')));
@@ -22,6 +24,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false
 }));
+
 
 
 module.exports = app;

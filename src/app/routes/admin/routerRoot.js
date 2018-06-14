@@ -31,7 +31,7 @@ router.get('/hoteles/:page',(req,res) => {
         if(err){
             res.send({
                 'code' : 400,
-                'faild' : 'error ocurred'
+                'faild' : 'error ocurred Base de datos paginacion'
             });
         }else{
             if(result.length > 0){
@@ -55,6 +55,46 @@ router.get('/hoteles/:page',(req,res) => {
     
 });
 
+router.get('/hoteles/Agregar/Nuevo',(req,res) => {
+    res.render('./admin/root/AddHotel');
+});
+
+router.post('/hoteles/Agregar/Nuevo',(req,res) => {
+    var nombreCadena = req.body.nombreCadena;
+    var nombreHotel = req.body.nombreHotel;
+    var calle = req.body.calle;
+    var numero = req.body.numero;
+    var estado = req.body.estado;
+    var ciudad = req.body.ciudad;
+    var estrellas = parseInt(req.body.estrellas);
+});
+
+
+
+router.get('/hoteles/Editar/:idHotel',(req,res) => {
+    console.log(req.params.idHotel);
+    res.send('Editar');
+});
+
+router.get('/hoteles/Eliminar/:idHotel',(req,res) => {
+    var idSplit = req.params.idHotel.split(':');
+    var idHotel = parseInt(idSplit[1]);
+    console.log(idHotel);
+    var sql = 'DELETE FROM hotel WHERE idHotel = ? ;';
+
+    conn.query(sql,[idHotel],(err,result,field) => {
+        if(err){
+            res.send({
+                'code' : 400,
+                'faild' : 'error ocurred Eliminar'
+            });
+        }else{
+            console.log('deleted ' + result.affectedRows + ' rows');
+            
+            res.redirect('/root/hoteles/1');
+        }
+    });
+});
 
 
 //-----------------------------------------------------

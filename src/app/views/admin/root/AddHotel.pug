@@ -1,0 +1,29 @@
+extends ./layaoutRoot.pug
+
+
+block conteiner
+
+    article(class = 'row')
+        div(class = 'col-4 offset-4')
+            div(class = 'card')
+                div(class='card-header text-center')
+                    h1 Nuevo Hotel
+                div(class ='card-body')               
+                    form(action="/root/hoteles/Agregar/Nuevo", method="post")
+                        div(class = 'form-group')
+                            input(type="text" placeholder='Cadena' name='nombreCadena' class='form-control' required)
+                            input(type="text" placeholder='Hotel' name='nombreHotel' class='form-control' required)
+                            input(type="text" placeholder='Calle' name='calle' class='form-control' required)
+                            input(type="number" placeholder='Numero' name='numero' class='form-control' required)
+                            input(type="text" placeholder='Estado' name='estado' class='form-control' required)
+                            input(type="text" placeholder='Ciudad' name='ciudad' class='form-control' required)
+                            label(for="estrellas") Estrellas
+                            select(name="estrellas" class='form-control')
+                                option(value="1") 1
+                                option(value="2") 2
+                                option(value="3") 3
+                                option(value="4") 4
+                                option(value="5") 5
+                            input(type="file" class="form-control-file border" required)
+                            input(type="submit", value="Agregar" class='btn btn-primary')
+                            input(type="reset", value="Cancelar" class='btn btn-secundary')

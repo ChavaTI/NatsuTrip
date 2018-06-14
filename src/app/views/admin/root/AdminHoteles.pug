@@ -22,15 +22,17 @@ block conteiner
                                     td #{result[i].idHotel}
                                     td #{result[i].nombreCadena}
                                     td #{result[i].nombreHotel}
-                                    td #{result[i].calle} , #{result[i].numero} , #{result[i].estado} , #{result[i].ciudad}
+                                    td #{result[i].calle} #{result[i].numero} , #{result[i].estado} #{result[i].ciudad}
                                     td #{result[i].estrellas}
                                     td #{result[i].imagen_name}
-                                    td #[button(class='btn btn-dark' onclick='reenviar("/root/hoteles/Editar?idHotel=' + result[i].idHotel + '")') Editar]
-                                    td #[button(class='btn btn-dark' onclick='reenviar("/root/hoteles/Eliminar?idHotel=' + result[i].idHotel + '")') Eliminar]
+                                    td #[button(class='btn btn-dark' onclick='reenviar("/root/hoteles/Editar/:' + result[i].idHotel + '")') Editar]
+                                    td #[button(class='btn btn-dark' onclick='reenviar("/root/hoteles/Eliminar/:' + result[i].idHotel + '")') Eliminar]
+                    button(class = 'btn btn-primary' onclick='reenviar("/root/hoteles/Agregar/Nuevo")') Nuevo
 
             div(class='row mt-5 mb-5')
                 div(class='col-12')
                     -for (var i= 0 ; i < 10; i++ )                
                          button(class='btn btn-info mr-3 pr-5 pl-5 pt-2 pb-2' onclick='reenviar("/root/hoteles/' + pages + '")') #{pages++}
+
                             
-                    
+

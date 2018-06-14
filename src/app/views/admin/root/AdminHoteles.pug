@@ -4,14 +4,33 @@ extends ./layaoutRoot.pug
 block conteiner
 
     article(class = 'row')
-        div(class = 'col-12 mt-5')
-            h1 Administracion de Hoteles
-            table(class="table table-borderless")
-                thead
-                    th idHotel
-                    th Cadena
-                    th Nombre
-                    th Domicilio
-                    th Estrellas
-                    th imagen
-                tbody
+        div(class = 'col-12')
+            div(class='row')
+                div(class = 'col-12 mt-5')
+                    h1 Administracion de Hoteles
+                    table(class="table table-borderless")
+                        thead
+                            th idHotel
+                            th Cadena
+                            th Nombre
+                            th Domicilio
+                            th Estrellas
+                            th imagen
+                        tbody
+                            -for (var i= 0 ; i < result.length; i++ )
+                                tr
+                                    td #{result[i].idHotel}
+                                    td #{result[i].nombreCadena}
+                                    td #{result[i].nombreHotel}
+                                    td #{result[i].calle} , #{result[i].numero} , #{result[i].estado} , #{result[i].ciudad}
+                                    td #{result[i].estrellas}
+                                    td #{result[i].imagen_name}
+                                    td #[button(class='btn btn-dark' onclick='reenviar("/root/hoteles/Editar?idHotel=' + result[i].idHotel + '")') Editar]
+                                    td #[button(class='btn btn-dark' onclick='reenviar("/root/hoteles/Eliminar?idHotel=' + result[i].idHotel + '")') Eliminar]
+
+            div(class='row mt-5 mb-5')
+                div(class='col-12')
+                    -for (var i= 0 ; i < 10; i++ )                
+                         button(class='btn btn-info mr-3 pr-5 pl-5 pt-2 pb-2' onclick='reenviar("/root/hoteles/' + pages + '")') #{pages++}
+                            
+                    

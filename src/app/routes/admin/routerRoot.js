@@ -18,11 +18,16 @@ router.get('/paquetes',(req,res) => {
     res.render('./admin/root/AdminPaquetes')
 });
 
-router.get('/hoteles',(req,res) => {
 
-    var sql = 'SELECT * FROM hotel';
+//------------------------Admiistracion de Hoteles-----------------------
+router.get('/hoteles/:page',(req,res) => {
+    let perPage = 10;
+    let page = req.params.page || 1;
 
-    conn.query(sql, (err,result,fielt) => {
+    var offset = (perPage * page) - perPage;
+    var sql = 'SELECT * FROM hotel LIMIT 10 OFFSET ?';
+
+    conn.query(sql,[offset],(err,result,fielt) => {
         if(err){
             res.send({
                 'code' : 400,
@@ -31,10 +36,18 @@ router.get('/hoteles',(req,res) => {
         }else{
             if(result.length > 0){
                 //Hay registros
-                res.render('./admin/root/AdminHoteles');
+                res.render('./admin/root/AdminHoteles',{
+                    result,
+                    current : page,
+                    pages : Math.ceil(result.length / perPage)
+                });
+                
             }else{
                 //No hay registros
-                res.render('./admin/root/AdminHoteles',{'result' : result});
+                console.log('No hay registros');
+                res.send({
+                    code : 404
+                })
             }
         }
     });
@@ -42,6 +55,9 @@ router.get('/hoteles',(req,res) => {
     
 });
 
+
+
+//-----------------------------------------------------
 router.get('/aerolineas',(req,res) => {
     res.render('./admin/root/AdminAerolineas')
 });

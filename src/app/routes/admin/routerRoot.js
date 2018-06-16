@@ -71,6 +71,8 @@ router.post('/hoteles/Agregar/Nuevo',(req,res) => {
     var habCosto = parseFloat(req.body.habCosto);
     var habTipo = req.body.habTipo;
 
+    console.log(req.body.idHabitacion);
+
 
     
     if (!req.files) return res.status(400).send('No files were uploaded.');
@@ -100,7 +102,7 @@ router.post('/hoteles/Agregar/Nuevo',(req,res) => {
                         var sql2 = 'UPDATE habitacion  SET capacidad = ?, costo = ?, tipo = ? , imagen_name = ?  WHERE idHabitacion = ?;';
                         conn.query(sql2,[habCapacidad,habCosto,habTipo,'/public/imgUpload/'+file2.name,req.body.idHabitacion],(e,r,f)=>{
                             if(e) return res.status(500).send(e);
-                            cosnole.log('update '+r.affectedRows+ ' rows table habitacion');
+                            console.log('update '+r.affectedRows+ ' rows table habitacion');
                             res.redirect('/root/hoteles/1'); // Esto es lo que retorna
                         });
                     });
@@ -115,8 +117,34 @@ router.post('/hoteles/Agregar/Nuevo',(req,res) => {
                 if(err) return res.status(500).send(err);
                 console.log('add ' + result.affectedRows + ' rows table hotel');
                 // Agregar Habitacion
-                res.redirect('/root/hoteles/1');
+                
+                var sqlSelect = 'SELECT * FROM hotel WHERE nombreCadena = ? AND nombreHotel = ? AND calle = ? AND numero = ? AND estado = ? AND ciudad = ? AND estrellas = ? ;';
 
+                conn.query(sqlSelect,[nombreCadena, nombreHotel, calle, numero, estado, ciudad, estrellas],(err3,result3,field3)=>{
+                    if(err3) return res.status(500).send(err3);
+
+                    console.log('ID habitacion de select '+ result3[0].idHotel);
+
+                    console.log(result3[0].nombreCadena);
+
+                    file2.mv('/home/salvador/Natsutrip/src/app/public/imgUpload/'+file2.name,(err2)=>{
+                        if(err2) return res.status(500).send(err2);
+                        
+                        var sql2 = 'INSERT INTO habitacion(idHabitacion,capacidad,costo,tipo,idHotel,imagen_name) VALUES (NULL,?,?,?,?,?);';
+                        conn.query(sql2,[habCapacidad,habCosto,habTipo,result3[0].idHotel,'/public/imgUpload/'+file2.name],(e,r,f)=>{
+                            if(e) return res.status(500).send(e);
+                            console.log('update '+r.affectedRows+ ' rows table habitacion');
+                            res.redirect('/root/hoteles/1'); // Esto es lo que retorna agregar        
+                        });
+                    });
+
+
+                });
+
+                
+
+                
+                
             });
             }
 
@@ -171,7 +199,7 @@ router.get('/hoteles/Editar/:idHotel/:nombreCadena/:nombreHotel/:calle/:numero/:
         var costo = result[0].costo;
         var tipo = result[0].tipo;
         var imagen_nameHab = result[0].imagen_name;
-
+    
         res.render('./admin/root/AddHotel',{
             idHotel,
             nombreCadena,

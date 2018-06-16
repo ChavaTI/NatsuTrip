@@ -138,20 +138,40 @@ router.get('/hoteles/Editar/:idHotel/:nombreCadena/:nombreHotel/:calle/:numero/:
     var estrellas = parseInt(estrellasSplit[1]);
 
     var imagen_nameSplit = req.params.imagen_name.split(':');
-    var imagen_name = imagen_nameSplit[1];
+    var imagen_nameHotel = imagen_nameSplit[1];
 
-    res.render('./admin/root/AddHotel',{
-        idHotel,
-        nombreCadena,
-        nombreHotel,
-        calle,
-        numero,
-        estado,
-        ciudad,
-        estrellas,
-        imagen_name : '/public/imgUpload/'+ imagen_name,
-        bandera : 'Editar'
+    var sql = 'SELECT * FROM habitacion WHERE idHotel = ?;';
+
+    conn.query(sql,[idHotel],(err,result,field) => {
+
+        if(err){
+            return res.send('No se encontro la habitacion del hotel');
+        }
+        var idHabitacion = result[0].idHabitacion;
+        var capacidad = result[0].capacidad;
+        var costo = result[0].costo;
+        var tipo = result[0].tipo;
+        var imagen_nameHab = result[0].imagen_name;
+
+        res.render('./admin/root/AddHotel',{
+            idHotel,
+            nombreCadena,
+            nombreHotel,
+            calle,
+            numero,
+            estado,
+            ciudad,
+            estrellas,
+            imagen_nameHotel : '/public/imgUpload/'+ imagen_nameHotel,
+            bandera : 'Editar',
+            idHabitacion,
+            capacidad,
+            costo,
+            tipo,
+            imagen_nameHab : imagen_nameHab
+        });
     });
+
 
 });
 

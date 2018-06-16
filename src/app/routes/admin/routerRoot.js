@@ -226,20 +226,44 @@ router.get('/hoteles/Eliminar/:idHotel',(req,res) => {
     var idSplit = req.params.idHotel.split(':');
     var idHotel = parseInt(idSplit[1]);
     console.log(idHotel);
-    var sql = 'DELETE FROM hotel WHERE idHotel = ? ;';
 
-    conn.query(sql,[idHotel],(err,result,field) => {
-        if(err){
-            res.send({
-                'code' : 400,
-                'faild' : 'error ocurred Eliminar'
+
+    var sqlSelect = 'SELECT * FROM habitacion WHERE idHotel = ?';
+
+    conn.query(sqlSelect,[idHotel],(sErr,sResult,sField) => {
+        if(sErr) res.status(500).send(sErr);
+        // Borrar habitacion
+        var sqlDeleteHab = 'DELETE FROM habitacion WHERE idHabitacion = ? ;';
+
+        conn.query(sqlDeleteHab,[sResult[0].idHabitacion],(dhabErr,dhabResult,dhField)=>{
+            if(dhabErr) res.status(500).send(dhabErr);
+            console.log('deleted ' + dhabResult.affectedRows + ' rows Habitacion');
+
+            //Borrar hotel
+
+            var sql = 'DELETE FROM hotel WHERE idHotel = ? ;';
+            conn.query(sql,[idHotel],(err,result,field) => {
+                if(err){
+                    res.send({
+                        'code' : 400,
+                        'faild' : 'error ocurred Eliminar',
+                        err
+                    });
+                }else{
+                    console.log('deleted ' + result.affectedRows + ' rows');
+                    
+                    res.redirect('/root/hoteles/1');
+                }
             });
-        }else{
-            console.log('deleted ' + result.affectedRows + ' rows');
+
             
-            res.redirect('/root/hoteles/1');
-        }
+
+        });
+
     });
+
+
+
 });
 
 

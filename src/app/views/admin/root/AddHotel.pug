@@ -44,16 +44,16 @@ block conteiner
                                 option(value="3") 3 personas
                                 option(value="4") 4 personas
                                 option(value="5") 5 personas
-                            label(for="HabCosto") Costo (MNX)                                
-                            input(type="number" name="HabCosto" class="form-control" min="1" step="any" required value= costo)
-                            label(for="HabTipo") Tipo
+                            label(for="habCosto") Costo (MNX)                                
+                            input(type="number" name="habCosto" class="form-control" min="1" step="any" required value= costo)
+                            label(for="habTipo") Tipo
                             select(name="habTipo" class='form-control' required id='habTipo')
                                 option(value="") 
                                 option(value="se") Sencilla
                                 option(value="sj") Suit Junior
                                 option(value="sd") Suit Doble
                                 option(value="sp") Suit Precidencial
-                            input(type="file" class="form-control-file border" required name='uploadImage' value= imagen_nameHab)
+                            input(type="file" class="form-control-file border" required name='habUploadImage' value= imagen_nameHab)
                             div(class='card')
                                 div(class='card-body')
                                     img(src= imagen_nameHab, alt="" class='card-img-top')

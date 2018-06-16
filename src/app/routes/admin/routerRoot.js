@@ -85,7 +85,7 @@ router.post('/hoteles/Agregar/Nuevo',(req,res) => {
                 conn.query(sql,[nombreCadena, nombreHotel, calle, numero, estado, ciudad, estrellas, '/public/imgUpload/'+file.name, req.body.idHotel],(err,result,field) => {
                     if(err) return res.status(500).send(err);
 
-                    console.log('add ' + result.affectedRows + ' rows');
+                    console.log('update ' + result.affectedRows + ' rows table hotel');
                     res.redirect('/root/hoteles/1');
 
                 });
@@ -95,7 +95,7 @@ router.post('/hoteles/Agregar/Nuevo',(req,res) => {
 
                 conn.query(sql,[nombreCadena, nombreHotel, calle, numero, estado, ciudad, estrellas, '/public/imgUpload/'+file.name],(err,result,field) => {
                 if(err) return res.status(500).send(err);
-                console.log('add ' + result.affectedRows + ' rows');
+                console.log('add ' + result.affectedRows + ' rows table hotel');
                 res.redirect('/root/hoteles/1');
 
             });

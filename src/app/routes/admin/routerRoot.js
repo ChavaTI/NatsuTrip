@@ -295,7 +295,82 @@ router.get('/aerolineas/:page',(req,res) => {
 });
 
 
+router.post('/aerolineas/Agregar/Nuevo',(req,res)=>{
+    var bandera = req.body.bandera;
+    var idAerolinea = req.body.idAerolinea;
+    var ciudad = req.body.ciudad;
+    var nombre = req.body.nombre;
+    var destino = req.body.destino;
+    var costo = parseFloat(req.body.costo);
 
+    if(!req.files) return res.status(400).send('No se subio ninguna imagen');
+
+    var file = req.files.uploadImage;
+    var img_name = file.name;
+
+    if(file.mimetype == "image/jpeg" ||file.mimetype == "image/png"||file.mimetype == "image/gif"){
+        file.mv('/home/salvador/Natsutrip/src/app/public/imgUpload/'+file.name,(err)=>{
+            if(err) return res.status(400).send('La imagen no se pudo procesar');
+
+            if(bandera == 'Editar'){
+                // Editar
+                var sql = 'UPDATE aerolinea SET ciudad = ? , nombre = ? , destino = ? , costo = ? , imagen_name = ? WHERE idAerolinea = ?;';
+                conn.query(sql,[ciudad,nombre,destino,costo,'/public/imgUpload/'+file.name,idAerolinea],(err,result,field)=>{
+                    if(err) return res.status(500).send(err);
+
+                    console.log('update '+result.affectedRows+' rows table aerolinea');
+                    res.redirect('/root/aerolineas/1');
+                });
+            }else{
+                // Agregar
+                var sql = 'INSERT INTO aerolinea(idAerolinea,ciudad,nombre,destino,costo,imagen_name) VALUES (NULL,?,?,?,?,?);';
+                conn.query(sql,[ciudad,nombre,destino,costo,'/public/imgUpload/'+file.name],(err,result,field)=>{
+                    if(err) return res.status(500).send(err);
+
+                    console.log('insert '+result.affectedRows+' rows table aerolinea');
+                    res.redirect('/root/aerolineas/1');
+                });
+            }
+        });
+
+    }else{
+        res.render('./admin/root/AddAerolinea',{'mensaje':'No puede subir el archivo con este formato'});
+    }
+
+});
+
+router.get('/aerolineas/Editar/:idAerolinea/:ciudad/:nombre/:destino/:costo/:imagen_name',(req,res)=>{
+    var idSplit = req.params.idAerolinea.split(':');
+    var idAerolinea = parseInt(idSplit[1]);
+
+    var ciudadSplit = req.params.ciudad.split(':');
+    var ciudad = ciudadSplit[1];
+
+    var nombreSplit = req.params.nombre.split(':');
+    var nombre = nombreSplit[1];
+
+    var destinoSplit = req.params.destino.split(':');
+    var destino = destinoSplit[1];
+
+    var costoSplit = req.params.costo.split(':');
+    var costo = parseFloat(costoSplit[1]);
+
+    var imagen_nameSplit = req.params.imagen_name.split(':');
+    var imagen_name = imagen_nameSplit[1];
+
+    res.render('./admin/root/AddAerolinea',{
+        bandera : 'Editar',
+        idAerolinea,
+        ciudad,
+        nombre,
+        destino,
+        costo,
+        imagen_name : '/public/imgUpload/'+ imagen_name,
+    
+    });
+
+
+});
 //--------------------------------------------------------------------------------------------------
 
 //---------------------------------PAQUETES---------------------------------------------------------

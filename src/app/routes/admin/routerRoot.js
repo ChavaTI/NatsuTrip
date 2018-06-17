@@ -263,13 +263,16 @@ router.get('/hoteles/Eliminar/:idHotel',(req,res) => {
 
 });
 
-router.get('/aerolineas/Agregar/Nuevo',(req,res) => {
-    res.render('./admin/root/AddAerolinea');
-});
+
 
 //-----------------------------------------------------------------------------------------------
 
 //------------------------------AEROLINEAS--------------------------------------------------------
+router.get('/aerolineas/Agregar/Nuevo',(req,res) => {
+    res.render('./admin/root/AddAerolinea');
+});
+
+
 router.get('/aerolineas/:page',(req,res) => {
     let perPage = 10;
     let page = req.params.page || 1;
@@ -370,6 +373,21 @@ router.get('/aerolineas/Editar/:idAerolinea/:ciudad/:nombre/:destino/:costo/:ima
     });
 
 
+});
+
+router.get('/aerolineas/Eliminar/:idAerolinea',(req,res)=>{
+    var idSplit = req.params.idAerolinea.split(':');
+    var idAerolinea = parseInt(idSplit[1]);
+
+    var sql = 'DELETE FROM aerolinea WHERE idAerolinea = ?;';
+
+    conn.query(sql,[idAerolinea],(err,result,field)=>{
+        if(err) return res.status(500).send(err);
+
+        console.log('delete '+result.affectedRows+' rows table aerolinea');
+        res.redirect('/root/aerolineas/1');
+
+    });
 });
 //--------------------------------------------------------------------------------------------------
 

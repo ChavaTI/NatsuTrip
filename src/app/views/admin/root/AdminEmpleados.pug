@@ -2,3 +2,40 @@ extends ./layaoutRoot.pug
 
 
 block conteiner
+
+    article(class = 'row')
+        div(class = 'col-12')
+            div(class='row')
+                div(class = 'col-8 mt-5')
+                    h1 Administracion de Empleados
+                    table(class="table table-hover table-dark text-center")
+                        thead
+                            th idAdmin
+                            th Nombre
+                            th Apellido Paterno
+                            th Apellido Materno
+                            th Nombre de Usuario
+                            th Contraseña
+                            th Tipo
+                            //th imagen
+                        tbody
+                            -for (var i= 0 ; i < result.length; i++ )
+                                tr
+                                    td #{result[i].idAdmin}
+                                    td #{result[i].nombre}
+                                    td #{result[i].aPaterno}
+                                    td #{result[i].aMAterno}
+                                    td #{result[i].username}
+                                    td #{result[i].pass}
+                                    td #{result[i].tipo}
+                                    //td #{result[i].imagen_name}
+                                    td #[button(class='btn btn-dark' onclick='reenviar("/root/empleados/Editar/:' + result[i].idAdmin + '/:'+ result[i].nombre +'/:'+ result[i].aPaterno +'/:'+ result[i].aMaterno +'/:'+ result[i].username +'/:'+ result[i].pass +'/:'+result[i].tipo+'")') Editar]
+                                    td #[button(class='btn btn-dark' onclick='reenviar("/root/empleados/Eliminar/:' + result[i].idAdmin + '")') Eliminar]
+                    button(class = 'btn btn-primary' onclick='reenviar("/root/empleados/Agregar/Nuevo")') Nuevo
+
+            div(class='row mt-5 mb-5')
+                div(class='col-12')
+                    -for (var i= 0 ; i < 10; i++ )                
+                         button(class='btn btn-info mr-3 pr-5 pl-5 pt-2 pb-2' onclick='reenviar("/root/empleados/' + pages + '")') #{pages++}
+
+    

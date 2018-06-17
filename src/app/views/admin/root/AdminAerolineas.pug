@@ -2,3 +2,37 @@ extends ./layaoutRoot.pug
 
 
 block conteiner
+
+    article(class = 'row')
+        div(class = 'col-12')
+            div(class='row')
+                div(class = 'col-8 mt-5')
+                    h1 Administracion de Hoteles
+                    table(class="table table-hover table-dark text-center")
+                        thead
+                            th idAerolinea
+                            th Ciudad
+                            th Nombre
+                            th Destino
+                            th Costo
+                            //th imagen
+                        tbody
+                            -for (var i= 0 ; i < result.length; i++ )
+                                tr
+                                    td #{result[i].idAerolinea}
+                                    td #{result[i].ciudad}
+                                    td #{result[i].nombre}
+                                    td #{result[i].destino}
+                                    td #{result[i].costo}
+                                    //td #{result[i].imagen_name}
+                                    td #[button(class='btn btn-dark' onclick='reenviar("/root/aerolineas/Editar/:' + result[i].idAerolinea + '/:'+ result[i].ciudad +'/:'+ result[i].nombre +'/:'+ result[i].destino +'/:'+ result[i].costo +'/:'+ result[i].imagen_name.split('/')[3] +'")') Editar]
+                                    td #[button(class='btn btn-dark' onclick='reenviar("/root/aerolineas/Eliminar/:' + result[i].idAerolinea + '")') Eliminar]
+                    button(class = 'btn btn-primary' onclick='reenviar("/root/aerolineas/Agregar/Nuevo")') Nuevo
+
+            div(class='row mt-5 mb-5')
+                div(class='col-12')
+                    -for (var i= 0 ; i < 10; i++ )                
+                         button(class='btn btn-info mr-3 pr-5 pl-5 pt-2 pb-2' onclick='reenviar("/root/aerolineas/' + pages + '")') #{pages++}
+
+                            
+

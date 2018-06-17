@@ -405,8 +405,36 @@ router.get('/ventas',(req,res) => {
 //------------------------------------------------------------------------------------------------------
 
 //------------------------------------------EMPLEADOS---------------------------------------------------
-router.get('/empleados',(req,res) => {
-    res.render('./admin/root/AdminEmpleados')
+router.get('/empleados/Agregar/Nuevo',(req,res)=>{
+    res.render('./admin/root/AddEmpleado');
+});
+
+router.get('/empleados/:page',(req,res) => {
+    let perPage = 10;
+    let page = req.params.page || 1;
+    let offset = (perPage * page) - perPage;
+
+    var sql = 'SELECT * FROM admin LIMIT 10 OFFSET ?;';
+
+    conn.query(sql,[offset],(err,result,field)=>{
+        if(err) return res.status(500).send(err);
+        console.log(result.length);
+        if(result.length > 0){
+            res.render('./admin/root/AdminEmpleados',{
+                result,
+                current : page,
+                pages : Math.ceil(result.length / perPage)
+            });
+        }else{
+            res.send('No hay registro');
+        }
+    });
+    
+});
+
+
+router.post('/empleados/Agregar/Nuevo',()=>{
+    
 });
 
 //-------------------------------------------------------------------------------------------------------

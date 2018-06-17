@@ -433,10 +433,86 @@ router.get('/empleados/:page',(req,res) => {
 });
 
 
-router.post('/empleados/Agregar/Nuevo',()=>{
-    
+router.post('/empleados/Agregar/Nuevo',(req,res)=>{
+    var bandera = req.body.bandera;
+    var idAdmin = req.body.idAdmin;
+    var nombre = req.body.nombre;
+    var aPaterno = req.body.aPaterno;
+    var aMaterno = req.body.aMaterno;
+    var username = req.body.username;
+    var pass = req.body.pass;
+    var tipo = parseInt(req.body.tipo);
+
+    if(bandera == 'Editar'){
+        // Editar
+        var sql = 'UPDATE admin SET nombre = ? , aPaterno = ?, aMaterno = ? , username = ? , pass = ? , tipo = ? WHERE idAdmin = ? ;';
+
+        conn.query(sql,[nombre,aPaterno,aMaterno,username,pass,tipo,idAdmin],(err,result,field)=>{
+            if(err) return res.status.res(err);
+            console.log('update '+result.affectedRows+ 'rows table admin');
+            res.redirect('/root/empleados/1');
+        });
+    }else{
+        // Insertar
+        var sql = 'INSERT INTO admin(idAdmin, nombre, aPaterno, aMaterno, username, pass, tipo) VALUES (NULL,?,?,?,?,?,?);';
+
+        conn.query(sql,[nombre,aPaterno,aMaterno,username,pass,tipo],(err,result,field)=>{
+            if(err) return res.status(500).send(err);
+            console.log('Insert '+result.affectedRows+' rows table admin');
+            res.redirect('/root/empleados/1');
+        });
+    }
 });
 
+router.get('/empleados/Editar/:idAdmin/:nombre/:aPaterno/:aMaterno/:username/:pass/:tipo',(req,res)=>{
+    var idAdminSplit = req.params.idAdmin.split(':');
+    var idAdmin = parseInt(idAdminSplit[1]);
+
+    var nombreSplit = req.params.nombre.split(':');
+    var nombre = nombreSplit[1];
+
+    var aPaternoSplit = req.params.aPaterno.split(':');
+    var aPaterno = aPaternoSplit[1];
+
+    var aMaternoSplit = req.params.aMaterno.split(':');
+    var aMaterno = aMaternoSplit[1];
+
+    var usernameSplit = req.params.username.split(':');
+    var username = usernameSplit[1];
+
+    var passSplit = req.params.pass.split(':');
+    var pass = passSplit[1];
+
+    var tipoSplit = req.params.tipo.split(':');
+    var tipo = parseInt(tipoSplit[1]);
+
+    res.render('./admin/root/AddEmpleado',{
+        bandera : 'Editar',
+        idAdmin,
+        nombre,
+        aPaterno,
+        aMaterno,
+        username,
+        pass,
+        tipo
+    });
+
+});
+
+router.get('/empleados/Eliminar/:idAdmin',(req,res)=>{
+    var idAdminSplit = req.params.idAdmin.split(':');
+    var idAdmin = parseInt(idAdminSplit[1]);
+
+    sql = 'DELETE FROM admin WHERE idAdmin = ?;';
+
+    conn.query(sql,[idAdmin],(err,result,field)=>{
+        if(err) return res.status(500).send(err);
+
+        console.log('DELETES '+result.affectedRows+' rows table admin');
+
+        res.redirect('/root/empleados/1');
+    });
+});
 //-------------------------------------------------------------------------------------------------------
 
 //------------------------------------------------Salir--------------------------------------------------

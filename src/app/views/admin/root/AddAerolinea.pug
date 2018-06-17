@@ -1,0 +1,32 @@
+extends ./layaoutRoot.pug
+
+
+block conteiner
+
+    article(class = 'row')
+        div(class = 'col-6 offset-3')
+            div(class = 'card')
+                div(class='card-header text-center')
+                    h1 Nueva Aerolinea
+                div(class ='card-body')               
+                    form(action="/root/hoteles/Agregar/Nuevo", method="post" enctype="multipart/form-data")
+                        div(class = 'form-group')
+                            input(value = bandera style="visibility:hidden" name = 'bandera')
+                            input(value = idAerolinea style="visibility:hidden" name = 'idAerolinea')
+                            input(type="text" placeholder='Ciudad' name='ciudad' class='form-control' required value= ciudad)
+                            input(type="text" placeholder='Nombre' name='nombre' class='form-control' required value= nombre)
+                            input(type="text" placeholder='Destino' name='destino' class='form-control' required value= destino)
+                            label(for="costo") Costo (MNX)
+                            input(type="number" name="costo" class="form-control" min="1" step="any" required value= costo)
+                            div(class='card')
+                                div(class='card-body')
+                                    img(src= imagen_name, alt="" class='card-img-top')
+                                div(class='card-footer')
+                                    p #{mensaje}
+                            input(type="submit", value="Agregar" class='btn btn-primary')
+                            input(type="reset", value="Cancelar" class='btn btn-secundary')
+                            
+    script(type='text/javascript').
+        document.getElementById('selectEstrellas').value = #{estrellas};
+        document.getElementById('habCapacidad').value = #{capacidad};
+        document.getElementById('habTipo').value = '#{tipo}';

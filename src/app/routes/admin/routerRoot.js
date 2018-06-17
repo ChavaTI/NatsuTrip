@@ -263,13 +263,38 @@ router.get('/hoteles/Eliminar/:idHotel',(req,res) => {
 
 });
 
+router.get('/aerolineas/Agregar/Nuevo',(req,res) => {
+    res.render('./admin/root/AddAerolinea');
+});
 
 //-----------------------------------------------------------------------------------------------
 
 //------------------------------AEROLINEAS--------------------------------------------------------
-router.get('/aerolineas',(req,res) => {
-    res.render('./admin/root/AdminAerolineas')
+router.get('/aerolineas/:page',(req,res) => {
+    let perPage = 10;
+    let page = req.params.page || 1;
+
+    let offset = (perPage * page) - perPage;
+
+    var sql = 'SELECT * FROM aerolinea LIMIT 10 OFFSET ? ;';
+
+    conn.query(sql,[offset],(err,result,field)=>{
+        if(err) return res.status(500).send(err);
+
+        if(result.length > 0){
+            res.render('./admin/root/AdminAerolineas',{
+                result,
+                current : page,
+                pages : Math.ceil(result.length / perPage)
+            });
+        }else{
+            res.send('No hay registros');
+        }
+    });
+    
 });
+
+
 
 //--------------------------------------------------------------------------------------------------
 

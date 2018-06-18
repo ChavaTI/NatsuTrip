@@ -392,8 +392,150 @@ router.get('/aerolineas/Eliminar/:idAerolinea',(req,res)=>{
 //--------------------------------------------------------------------------------------------------
 
 //---------------------------------PAQUETES---------------------------------------------------------
-router.get('/paquetes',(req,res) => {
-    res.render('./admin/root/AdminPaquetes')
+router.get('/paquetes/Agregar/Nuevo',(req,res) => {
+
+    var sql1 =  'SELECT * FROM hotel ; ';
+    conn.query(sql1,(err1,result1,field1)=>{
+        if(err1) res.status(500).send(err1);
+
+        var hoteles = result1;
+
+        var sql2 = 'SELECT * FROM aerolinea ;';
+
+        conn.query(sql2,(err2,result2,field2)=>{
+            if(err2) res.status(500).send(err2);
+
+            var aerolineas = result2;
+            
+            res.render('./admin/root/AddPaquete',{
+                hoteles,
+                aerolineas
+            });
+
+        });
+    });
+    
+});
+
+router.get('/paquetes/:page',(req,res)=>{
+    let perPage = 10;
+    let page = req.params.page || 1;
+
+    let offset = (perPage * page) - perPage;
+
+    var sql = 'select idPaquete, nombreHotel, a.nombre as nombreAerolinea, p.nombre, descripcion, estadia, total from (hotel h inner join (paquete p inner join aerolinea a on a.idAerolinea=p.idAerolinea) on p.idHotel=h.idHotel); ';
+         conn.query(sql,(err,result,field)=>{
+            if(err) return res.status(500).send(err);
+
+            
+             if(result.length > 0){
+                res.render('./admin/root/AdminPaquetes',{
+                    result,
+                    current : page,
+                    pages : Math.ceil(result.length / perPage)
+                });
+             }else{
+                 // No hay resultados
+                 res.send('No hay resultados');
+             }
+         });
+});
+
+router.post('/paquetes/Agregar/Nuevo',(req,res)=>{
+    var bandera = req.body.bandera;
+    var idPaquete = req.body.idPaquete;
+    var idHotel = req.body.idHotel;
+    var idAerolinea = req.body.idAerolinea;
+    var nombre = req.body.nombre;
+    var estadia = req.body.estadia;
+    var total = req.body.total;
+    var descripcion = req.body.descripcion;
+
+    if(bandera == 'Editar'){
+        // Editar
+        sql = 'UPDATE paquete SET idHotel = ?, idAerolinea = ?, nombre = ? , descripcion = ?, estadia = ?, total = ? WHERE idPaquete = ? ;';
+        conn.query(sql,[idHotel,idAerolinea,nombre,descripcion,estadia,total,idPaquete],(err,result,field)=>{
+            console.log('UPDATE '+result.affectedRows+' rows table paquete')
+            res.redirect('/root/paquetes/1');
+        });
+    }else{
+        // Agregar
+        sql = 'INSERT INTO paquete(idPaquete,idHotel,idAerolinea,nombre,descripcion,estadia,total) VALUES (NULL,?,?,?,?,?,?);';
+        conn.query(sql,[idHotel,idAerolinea,nombre,descripcion,estadia,total],(err,result,field)=>{
+            if(err) return res.status(500).send(err);
+            console.log('INSERT '+result.affectedRows+' rows table paquete')
+            res.redirect('/root/paquetes/1');
+        });
+    }
+});
+
+router.get('/paquetes/Editar/:idPaquete/:nombreHotel/:nombreAerolinea/:nombrePaquete/:descripcion/:estadia/:total',(req,res)=>{
+    var idPaqueteSlit = req.params.idPaquete.split(':');
+    var idPaquete = parseInt(idPaqueteSlit[1]);
+
+    var nombreHotelSplit = req.params.nombreHotel.split(':');
+    var nombreHotel = nombreHotelSplit[1];
+
+    var nombreAerolineaSplit = req.params.nombreAerolinea.split(':');
+    var nombreAerolinea = nombreAerolineaSplit[1];
+
+    var nombrePaqueteSplit = req.params.nombrePaquete.split(':');
+    var nombrePaquete = nombrePaqueteSplit[1];
+
+    var descripcionSplit = req.params.descripcion.split(':');
+    var descripcion = descripcionSplit[1];
+
+    var estadiaSplit = req.params.estadia.split(':');
+    var estadia = estadiaSplit[1];
+
+    var totalSplit = req.params.total.split(':');
+    var total = parseFloat(totalSplit[1]);
+
+    var sql1 =  'SELECT * FROM hotel ; ';
+    conn.query(sql1,(err1,result1,field1)=>{
+        if(err1) res.status(500).send(err1);
+
+        var hoteles = result1;
+
+        var sql2 = 'SELECT * FROM aerolinea ;';
+
+        conn.query(sql2,(err2,result2,field2)=>{
+            if(err2) res.status(500).send(err2);
+
+            var aerolineas = result2;
+            
+            res.render('./admin/root/AddPaquete',{
+                hoteles,
+                aerolineas,
+                bandera : 'Editar',
+                idPaquete,
+                nombreHotel,
+                nombreAerolinea,
+                nombrePaquete,
+                descripcion,
+                estadia,
+                total
+            });
+
+        });
+    });
+
+
+
+});
+
+router.get('/paquetes/Eliminar/:idPaquete',(req,res)=>{
+    var idPaqueteSlit = req.params.idPaquete.split(':');
+    var idPaquete = parseInt(idPaqueteSlit[1]);
+
+    var sql = 'DELETE FROM paquete WHERE idPaquete = ? ;' ;
+
+    conn.query(sql,[idPaquete],(err,result,field)=>{
+        if(err) return res.status(500).res(err);
+
+        console.log('delete '+result.affectedRows+ ' rows table paquete');
+        res.redirect('/root/paquetes/1');
+    });
 });
 //-----------------------------------------------------------------------------------------------------
 

@@ -1,0 +1,47 @@
+extends ./layaoutRoot.pug
+
+
+block conteiner
+
+    article(class = 'row')
+        div(class = 'col-6 offset-3')
+            div(class = 'card')
+                div(class='card-header text-center')
+                    h1 Nuevo Paquete
+                div(class ='card-body')               
+                    form(action="/root/paquetes/Agregar/Nuevo", method="post" enctype="multipart/form-data")
+                        div(class = 'form-group')
+                            input(value = bandera style="visibility:hidden" name = 'bandera')
+                            input(value = idPaquete style="visibility:hidden" name = 'idPaquete')
+                            br
+                            label(for="idHotel" ) Hotel
+                            select(name="idHotel" class='form-control' required id='idHotel')
+                                -for (var i = 0; i < hoteles.length; i++)
+                                    option(value= hoteles[i].idHotel) #{hoteles[i].nombreHotel}
+                            label(for="idAerolinea") Aerolinea
+                            select(name="idAerolinea" class='form-control' required id='idAerolinea')
+                                -for (var i = 0; i < aerolineas.length; i++)
+                                    option(value= aerolineas[i].idAerolinea) #{aerolineas[i].nombre}
+                            input(type="text" placeholder='Nombre del Paquete' name='nombre' class='form-control' required value= nombrePaquete)
+                            select(name="estadia" class='form-control' required id='estadia')                          
+                                option(value="3d") 3 días
+                                option(value="1s") 1 semana
+                                option(value="2s") 2 semanas
+                            input(type="number" name="total" class="form-control" min="1" step="any" required value= total)
+                            textarea(name="descripcion", cols="30", rows="10" class='form-control' placeholder = 'Descripcion').
+                                #{descripcion}
+                            input(type="submit", value="Agregar" class='btn btn-primary')
+                            input(type="reset", value="Cancelar" class='btn btn-secundary')
+    script(type='text/javascript').
+
+        var hoteles = #{hoteles};
+        var aerolineas = #{aerolineas}
+
+        for (var i = 0; i < hoteles.length; i++)
+            if(nombreHotel == hoteles[i])
+                document.getElementById('idHotel').value = ''+hoteles[i];
+        
+        for (var i = 0; i < aerolineas.length; i++)
+            if(nombreAerolinea == aerolineas[i])
+                document.getElementById('idAerolinea').value = ''+aerolineas[i];
+        

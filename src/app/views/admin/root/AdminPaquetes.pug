@@ -2,3 +2,40 @@ extends ./layaoutRoot.pug
 
 
 block conteiner
+
+    article(class = 'row')
+        div(class = 'col-12')
+            div(class='row')
+                div(class = 'col-10 mt-5')
+                    h1 Administracion de Paquetes
+                    table(class="table table-hover table-dark text-center")
+                        thead
+                            th idPaquete
+                            th Nombre de Hotel
+                            th Nombre Aerolinea
+                            th Nombre Paquete
+                            th Descripcion del Paquete
+                            th Estadia
+                            th Total
+                            //th imagen
+                        tbody
+                            -for (var i= 0 ; i < result.length; i++ )
+                                tr
+                                    td #{result[i].idPaquete}
+                                    td #{result[i].nombreHotel}
+                                    td #{result[i].nombreAerolinea}
+                                    td #{result[i].nombre}
+                                    td #{result[i].descripcion}
+                                    td #{result[i].estadia}
+                                    td #{result[i].total}
+                                    //td #{result[i].imagen_name}
+                                    td #[button(class='btn btn-dark' onclick='reenviar("/root/paquetes/Editar/:' + result[i].idPaquete + '/:'+ result[i].nombreHotel +'/:'+ result[i].nombreAerolinea +'/:'+ result[i].nombre +'/:'+ result[i].descripcion +'/:'+ result[i].estadia +'/:'+result[i].total+'")') Editar]
+                                    td #[button(class='btn btn-dark' onclick='reenviar("/root/paquetes/Eliminar/:' + result[i].idPaquete + '")') Eliminar]
+                    button(class = 'btn btn-primary' onclick='reenviar("/root/paquetes/Agregar/Nuevo")') Nuevo
+
+            div(class='row mt-5 mb-5')
+                div(class='col-12')
+                    -for (var i= 0 ; i < 10; i++ )                
+                         button(class='btn btn-info mr-3 pr-5 pl-5 pt-2 pb-2' onclick='reenviar("/root/paquetes/' + pages + '")') #{pages++}
+
+                            

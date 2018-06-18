@@ -2,3 +2,32 @@ extends ./layaoutRoot.pug
 
 
 block conteiner
+
+    article(class = 'row')
+        div(class = 'col-12')
+            div(class='row')
+                div(class = 'col-10 mt-5')
+                    h1 Administracion de Paquetes
+                    table(class="table table-hover table-dark text-center")
+                        thead
+                            th idVenta
+                            th Usuario
+                            th Paquete
+                            th Fecha
+                            th Total
+                            th Estatus
+                            //th imagen
+                        tbody
+                            -for (var i= 0 ; i < result.length; i++ )
+                                tr
+                                    td #{result[i].idVenta}
+                                    td #{result[i].nombreUsuario}
+                                    td #{result[i].nombrePaquete}
+                                    td #{result[i].fecha}
+                                    td #{result[i].costoTotal}
+                                    td #{result[i].estatusCompra}
+                                    //td #{result[i].imagen_name}
+    div(class='row mt-5 mb-5')
+                div(class='col-12')
+                    -for (var i= 0 ; i < 10; i++ )                
+                         button(class='btn btn-info mr-3 pr-5 pl-5 pt-2 pb-2' onclick='reenviar("/root/paquetes/' + pages + '")') #{pages++}

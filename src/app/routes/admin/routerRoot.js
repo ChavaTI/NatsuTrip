@@ -541,7 +541,30 @@ router.get('/paquetes/Eliminar/:idPaquete',(req,res)=>{
 
 //---------------------------------------VENTAS--------------------------------------------------------
 router.get('/ventas/:page',(req,res) => {
-    res.render('./admin/root/AdminVentas')
+    let perPage = 10;
+    let page = req.params.page || 1;
+
+    let offset = (perPage * page) - perPage;
+
+    var sql = 'select idVenta, u.nombre as nombreUsuario, p.nombre as nombrePaquete, vp.fecha , costoTotal, estatusCompra from (usuario u inner join (ventaPaquete vp inner join paquete p on vp.idPaquete = p.idPaquete) on u.idUsuario = vp.idUsuario);';
+
+    conn.query(sql,(err,result,field)=>{
+        if(err) return res.status(500).send(err);
+
+        if(result.length > 0){
+            res.render('./admin/root/AdminVentas',{
+                result,
+                current : page,
+                pages : Math.ceil(result.length / perPage)
+            });
+        }else{
+            res.send('No hay registros');
+        }
+    });
+
+
+
+    
 });
 
 

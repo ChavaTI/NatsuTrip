@@ -8,9 +8,10 @@ block conteiner
                 div(class="card-header textCenter")
                     p Iniciar Sesión.
                 div(class="card-body")
-                    form(class="" action="/perfil" method="post")
+                    form(class="" action="/user" method="post")
                         div(class="form-group")
                             input(name = "email" type="email" class="form-control mb-3" placeholder="Email" required)
                             input(name = "pass" type="password" class="form-control mb-3" placeholder="Contraseña" required)
                             input(type="submit" value="Login" class="btn btn-primary")
                             input(type="reset" value="Cancelar" class="btn btn-primary")
+                            button(class="btn btn-dark offset-6") Crear Cuenta

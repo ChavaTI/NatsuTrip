@@ -18,7 +18,9 @@ app.use('/root',require('./app/routes/admin/routerRoot.js'));
 
 
 //Users
-
+require('./app/routes/users/loginUser.js')(app);
+app.use('/user',require('./app/routes/users/sessionUser.js'));
+app.use('/user',require('./app/routes/users/routerUser.js'));
 
 
 

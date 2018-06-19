@@ -1,4 +1,4 @@
-extends ./commons/layaout.pug
+extends ./commons/layaoutSession.pug
 
 
 block conteiner
@@ -47,6 +47,6 @@ block conteiner
                                 td Lugar
                                 td #{ciudad}, #{estado}
                             tr
-                                td #[button(class="btn btn-primari") Editar]
+                                td #[button(class="btn btn-primari" onclick='reenviar("/user/Editar")') Editar]
                             
                             

@@ -152,7 +152,7 @@ router.post('/ConfirmarCompra/:idPaquete/:total/:nombrePaquete',(req,res)=>{
 //-------------------------------------------------------------------
 //----------------------------USUARIO--------------------------------
 router.get('/perfil',(req,res)=>{
-    console.log('GGGGGGGGGGG');
+    
     res.render('./users/perfil',{
        
         nombre : req.session.nombre,
@@ -173,6 +173,89 @@ router.get('/perfil',(req,res)=>{
         CURP: req.session.CURP,
         imagen_name: req.session.imagen_name 
     });
+});
+
+router.get('/Editar',(req,res)=>{
+   res.render('./users/editarPerfil',{
+    nombre : req.session.nombre,
+    aPaterno: req.session.aPaterno,
+    aMaterno: req.session.aMaterno,
+    fNacimiento : req.session.fNacimiento,
+    telefono: req.session.telefono,
+    correo : req.session.correo,
+    pass: req.session.pass,
+    sexo : req.session.sexo,
+    calle: req.session.calle,
+    numero: req.session.numero,
+    estado: req.session.estado,
+    ciudad: req.session.ciudad,
+    cp: req.session.cp,
+    noTargD: req.session.noTargetaDebito,
+    noTargC: req.session.noTargetaCredito ,
+    CURP: req.session.CURP,
+    imagen_name: req.session.imagen_name 
+   }); 
+});
+
+router.post('/EditarPerfil',(req,res)=>{
+    var nombre = req.body.nombre;
+    var aPaterno = req.body.aPaterno;
+    var aMaterno = req.body.aMaterno;
+    var fNacimiento = req.body.fNacimiento;
+    var telefono = req.body.telefono;
+    var correo = req.body.correo;
+    var pass = req.body.pass;
+    var sexo = req.body.sexo;
+    var calle = req.body.calle;
+    var numero = req.body.numero;
+    var estado = req.body.estado;
+    var ciudad = req.body.ciudad;
+    var noTargD = req.body.noTargD;
+    var noTargC = req.body.noTargC;
+    var CURP = req.body.CURP;
+    var cp = req.body.cp;
+
+    
+    if (!req.files) return res.status(400).send('No files were uploaded.');
+
+    var file = req.files.uploadImage;
+    var imagen_name = file.name;
+    if(file.mimetype == "image/jpeg" ||file.mimetype == "image/png"||file.mimetype == "image/gif"){
+        file.mv('/home/salvador/Natsutrip/src/app/public/imgUpload/'+file.name,(err)=>{
+            if(err) return res.status(500).send(err);
+            var sql = 'UPDATE usuario SET nombre = ?, aPaterno = ?, aMaterno = ?, fNacimiento = ?, telefono = ?, correo = ?, pass = ?, sexo = ?,calle = ?, numero = ?, estado = ?, ciudad = ?, cp = ?, noTargetaDebito = ?, noTargetaCredito = ?, CURP = ?, imagen_name = ? where  idUsuario = ?;';
+
+            conn.query(sql,[nombre,aPaterno,aMaterno,fNacimiento,telefono,correo,pass,sexo,calle,numero,estado,ciudad,cp,noTargD,noTargC,CURP,'/public/imgUpload/'+imagen_name,req.session.idUsuario],(e,r,f)=>{
+                if(e) return res.status(500).send(e);
+                req.session.nombre = nombre;
+                req.session.aPaterno = aPaterno;
+                req.session.aMaterno = aMaterno;
+                req.session.fNacimiento = fNacimiento;
+                req.session.telefono = telefono;
+                req.session.correo = correo;
+                req.session.pass = pass;
+                req.session.sexo = sexo;
+                req.session.calle = calle;
+                req.session.numero = numero;
+                req.session.estado = estado;
+                req.session.ciudad = ciudad;
+                req.session.cp = cp;
+                req.session.noTargetaDebito = noTargD;
+                req.session.noTargetaCredito = noTargC;
+                req.session.CURP = CURP;
+                req.session.imagen_name = '/public/imgUpload/'+file.name;
+                console.log('update '+r.affectedRows+' rows table usuarios');
+                res.redirect('/user/perfil');
+            });
+
+        });
+    }else{
+
+    }
+
+    
+
+    
 });
 //---------------------------------------------------------------------
 // ------------------------------LOGOUT------------------------------

@@ -1,4 +1,4 @@
-extends ./commons/layaout.pug
+extends ./commons/layaoutSession.pug
 
 
 block conteiner
@@ -6,36 +6,46 @@ block conteiner
         div(class="col-2")
             div(class="row")
                 div(class="col-12")
-                    img(src="/public/img/Usuarios/user.png" alt="")
+                    img(src= imagen_name alt="")
             div(class="row mt-3")
                 div(class="offset-5 col-6")
-                    button(type="button" name="button" class="btn btn-secondary") Editar imagen
+                    input(type="file" name="uploadImage" class="btn btn-secondary" form = "Editar" required)
         div(class=" offset-2 col-5")
             div(class="jumbotron textUserData")
-                form(class="" action="/perfil:D" method="post")
+                form(class="" action="/user/EditarPerfil" method="post" id = "Editar" enctype="multipart/form-data")
                     div(class="form-group")
                         label(for="name") Nombre:
-                        input(type="text" name="name" value="" class="form-control" id="name" required)
+                        input(type="text" name="nombre" value= nombre class="form-control" id="nombre" required)
                         label(for="apaterno") Apellido Paterno:
-                        input(type="text" name="apaterno" value="" class="form-control" id="apaterno" required)
+                        input(type="text" name="aPaterno" value= aPaterno class="form-control" id="aPaterno" required)
                         label(for='amaterno') Apellido Materno:
-                        input(type="text" name="amaterno" value="" class="form-control" id="amaterno" required)
+                        input(type="text" name="aMaterno" value= aMaterno class="form-control" id="aMaterno" required)
                         label(for="date") Fecha de Nacimiento:
-                        input(type="date" class="form-control" name="date" id="date")
+                        input(type="date" class="form-control" name="fNacimiento" id="date" value=fNacimiento)
                         label(for="tel") Telefono: 
-                        input(type="tel" name="tel" class="form-control" id="tel")
+                        input(type="tel" name="telefono" class="form-control" id="telefono" value = telefono)
                         label(for="email") Correo electronico:
-                        input(type="email" name="email" id="email" class="form-control")
+                        input(type="email" name="correo" id="email" class="form-control" value = correo)
+                        label(for="pass")
+                        input(type="password" name="pass" id="email" class="form-control" value = pass)
                         label(for="sex") Sexo:
-                        select(name="sex" id="sex" class="custom-select")
+                        select(name="sexo" id="sexo" class="custom-select")
                             option(value="M") Masculino: 
                             option(value="F") Femenino: 
                         label(for="street") Calle:
-                        input(type="text" name="street" id="street" class="form-control")
+                        input(type="text" name="calle" id="street" class="form-control" value= calle)
                         label(for="num") Numero:
-                        input(type="number" name="num" id="num" class="form-control")
+                        input(type="number" name="numero" id="numero" class="form-control" value = numero)
+                        label(for="cp")
+                        input(type="text" name="cp" id="estado" class="form-control" value = cp)
                         label(for="estado") Estado:
-                        input(type="text" name="estado" id="estado" class="form-control")
+                        input(type="text" name="estado" id="estado" class="form-control" value = estado)
                         label(for="ciudad") Ciudad:
-                        input(type="text" name="ciudad" id="ciudad" class="form-control")
+                        input(type="text" name="ciudad" id="ciudad" class="form-control" value = ciudad)
+                        label(for="noTargD") No. Targeta de Debito
+                        input(type="text" name="noTargD" id="noTargD" class="form-control" value = noTargD)
+                        label(for="noTargC") No. Targeta de Credito
+                        input(type="text" name="noTargC" id="noTargC" class="form-control" value = noTargC)
+                        label(for="CURP") CURP
+                        input(type="text" name="CURP" id="ciudad" class="form-control" value = CURP)
                         input(type="submit" name="" value="Aceptar" class="btn btn-primary")

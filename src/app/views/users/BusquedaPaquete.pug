@@ -1,0 +1,16 @@
+extends ./commons/layaoutSession.pug
+
+
+block conteiner
+    article(class = 'row mt-5')
+        -for(var i=0; i< result.length; i++)
+            div(class = 'col-3')
+                div(class = 'card mb-2')
+                    div(class = 'card-header')
+                        h1 #{result[i].nombre}
+                    div(class = 'card-body')
+                        img(src=result[i].imagen_name, alt=""  class="card-img-top mb-3")
+                        p #{result[i].descripcion}
+                    div(class = 'card-footer')
+                        button(class = 'btn btn-primary offset-4' onclick='reenviar("/user/ConocerPaquete/:' + result[i].idPaquete + '")') Conocer
+                        

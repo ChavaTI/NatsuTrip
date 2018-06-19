@@ -1,0 +1,16 @@
+extends ./commons/layaoutSession.pug
+
+
+block conteiner
+    article(class = 'row')
+        div(class = 'col-6 offset-3 text-center mb-5')
+            div(class = 'card')
+                div(class = 'card-header')
+                    h1 Confirmar compra de Paquete #{nombrePaquete}
+                div(class = 'card-body')
+                    form(action="/user/ConfirmarCompra/:"+idPaquete+"/:"+total+"/:"+nombrePaquete class="form-inline ml-5"  method="post")
+                        input(name='pass' type="password" class="form-control mr-sm-2" placeholder="Introdusca su contraseña")
+                        button(class="btn btn-success" type="submit") Confirmar
+                div(class = 'card-footer')
+                    p #{mensaje}
+                

@@ -22,8 +22,8 @@ html(lang="en")
                         a(href="#" class="nav-link" onclick="reenviar('/user/paquetes')") Mis paquetes
                     li(class="nav-item active mr-sm-5")
                         a(href="#" class="nav-link" onclick="reenviar('/user/logout')") Cerrar Sesion
-                    form(action="/user/buscar" class="form-inline ml-5")
-                        input(type="text" class="form-control mr-sm-2" placeholder="Buscar paquetes")
+                    form(action="/user/buscar" class="form-inline ml-5"  method="post")
+                        input(name='buscar' type="text" class="form-control mr-sm-2" placeholder="Buscar paquetes")
                         button(class="btn btn-success" type="submit") Buscar
             block conteiner
 

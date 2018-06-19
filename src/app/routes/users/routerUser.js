@@ -48,15 +48,113 @@ router.post('/',(req,res)=>{
     });
 });
 
-
+//--------------------------PRINCIPAL-------------------------------
 router.get('/',(req,res)=>{
     res.render('./users/principal');
 });
 
+//-------------------------------------------------------------------
+//---------------------BUSQUEDA PAQUETES--------------------------------------
+router.post('/buscar',(req,res)=>{
+    var lugar = req.body.buscar;
+    if(lugar == 'NULL' || lugar == '' || lugar == ' '){
+    
+        var sql = 'select p.idPaquete, p.nombre, p.descripcion, h.imagen_name from (hotel h inner join (paquete p inner join aerolinea a on a.idAerolinea=p.idAerolinea) on p.idHotel=h.idHotel);';
+        conn.query(sql,(err,result,field)=>{
+            if(err) return res.status.send(err);
+
+            res.render('./users/BusquedaPaquete',{
+                result
+            });
+        });
+    }else{
+        var sql = 'select p.idPaquete, p.nombre, p.descripcion, h.imagen_name from (hotel h inner join (paquete p inner join aerolinea a on a.idAerolinea=p.idAerolinea) on p.idHotel=h.idHotel) where a.destino = ? ;';
+        conn.query(sql,[lugar],(err,result,field)=>{
+            if(err) return res.status.send(err);
+
+            res.render('./users/BusquedaPaquete',{
+                result
+            });
+        });
+        
+    }
+    
+});
+
+router.get('/ConocerPaquete/:idPaquete',(req,res)=>{
+    var idPaqueteSplit = req.params.idPaquete.split(':'); 
+    var idPaquete = parseInt(idPaqueteSplit[1]);
+
+    sql = 'select p.idPaquete, p.nombre as nombrePaquete, p.descripcion, p.estadia, p.total, h.idHotel, h.nombreCadena, h.nombreHotel, h.ciudad, h.estrellas,h.imagen_name as imagenHotel, hab.idHabitacion ,hab.capacidad,hab.tipo,hab.imagen_name as imagenHabitacion, a.idAerolinea, a.imagen_name as imagenAerolinea from habitacion hab inner join (hotel h inner join (paquete p inner join aerolinea a on a.idAerolinea=p.idAerolinea) on p.idHotel=h.idHotel) on hab.idHotel = h.idHotel where idPaquete= ? ;';
+    conn.query(sql,[idPaquete],(err,result,field)=>{
+        if(err) return res.status(500).send(err);
+        console.log('Llego');
+        res.render('./users/MuestraPaquete',{
+            result
+        });
+        
+    });
+});
+
+router.get('/ComprarPaquete/:idPaquete/:total/:nombrePaquete',(req,res)=>{
+    var idPaqueteSplit = req.params.idPaquete.split(':');
+    var idPaquete = parseInt(idPaqueteSplit[1]);
+
+    var totalSplit = req.params.total.split(':');
+    var total = parseFloat(totalSplit[1]);
+
+    var nombrePaquete = req.params.nombrePaquete.split(':')[1];
 
 
+
+    res.render('./users/ConfirmarCompra',{
+        idPaquete,
+        total,
+        nombrePaquete
+    });
+});
+
+router.post('/ConfirmarCompra/:idPaquete/:total/:nombrePaquete',(req,res)=>{
+    var pass = req.body.pass;
+
+    var idPaqueteSplit = req.params.idPaquete.split(':');
+    var idPaquete = parseInt(idPaqueteSplit[1]);
+
+    var totalSplit = req.params.total.split(':');
+    var total = parseFloat(totalSplit[1]);
+
+    if(req.session.pass == pass){
+        
+        var sql = 'INSERT INTO ventaPaquete(idVenta,idUsuario,idPaquete,fecha,costoTotal,estatusCompra) VALUES (NULL,?,?,?,?,?);';
+        conn.query(sql,[req.session.idUsuario,idPaquete,new Date(),total,'ve'],(err,result,field)=>{
+            if(err) res.status(500).send(err);
+
+            console.log('insert '+result.affectedRows+' Rows table ventaPaquete ');
+
+            res.redirect('/user');
+        });
+
+    }else{
+        
+
+        
+
+        var nombrePaquete = req.params.nombrePaquete.split(':')[1];
+        res.render('./users/ConfirmarCompra',{
+            idPaquete,
+            total,
+            nombrePaquete,
+            mensaje : 'Contraseña incorrecta'
+        });
+    }
+});
+//-------------------------------------------------------------------
+
+// ------------------------------LOGOUT------------------------------
 router.get('/logout',(req,res)=>{
     req.session.destroy();
     res.redirect('/login');
 });
+
+//---------------------------------------------------------------------
 module.exports = router;

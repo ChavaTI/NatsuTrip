@@ -17,6 +17,7 @@ router.post('/',(req,res)=>{
             if(result[0].pass == pass){
                 // Crear Sesion
                 req.session.idUsuario = result[0].idUsuario;
+                req.session.nombre = result[0].nombre;
                 req.session.aPaterno = result[0].aPaterno;
                 req.session.aMaterno = result[0].aMaterno;
                 req.session.fNacimiento = result[0].fNacimiento;
@@ -149,7 +150,31 @@ router.post('/ConfirmarCompra/:idPaquete/:total/:nombrePaquete',(req,res)=>{
     }
 });
 //-------------------------------------------------------------------
-
+//----------------------------USUARIO--------------------------------
+router.get('/perfil',(req,res)=>{
+    console.log('GGGGGGGGGGG');
+    res.render('./users/perfil',{
+       
+        nombre : req.session.nombre,
+        aPaterno: req.session.aPaterno,
+        aMaterno: req.session.aMaterno,
+        fNacimiento : req.session.fNacimiento,
+        telefono: req.session.telefono,
+        correo : req.session.correo,
+        pass: req.session.pass,
+        sexo : req.session.sexo,
+        calle: req.session.calle,
+        numero: req.session.numero,
+        estado: req.session.estado,
+        ciudad: req.session.ciudad,
+        cp: req.session.cp,
+        noTargD: req.session.noTargetaDebito,
+        noTargC: req.session.noTargetaCredito ,
+        CURP: req.session.CURP,
+        imagen_name: req.session.imagen_name 
+    });
+});
+//---------------------------------------------------------------------
 // ------------------------------LOGOUT------------------------------
 router.get('/logout',(req,res)=>{
     req.session.destroy();

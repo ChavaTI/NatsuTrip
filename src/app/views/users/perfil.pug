@@ -3,23 +3,50 @@ extends ./commons/layaout.pug
 
 block conteiner
     section(class="row")
-        div(class="col-2")
-            div(class="row")
-                div(class="col-12")
-                    img(src="/public/img/Usuarios/user.png" alt="")
-            div(class="row mt-3")
-                div(class="offset-5 col-6")
-                    button(type="button" name="button" class="btn btn-secondary") Editar imagen
-        div(class=" offset-2 col-5")
-            div(class="jumbotron textUserData")
-                p!= nombre
-                p!= apaterno
-                p!= amaterno
-                p!= fechaNac
-                p!= tel
-                p!= email
-                p!= sexo
-                p!= dir
-                p!= estado
-                p!= ciudad
-                button(onclick="reenviar('./editar')" type="button" name="button" class="btn btn-primary") Editar
+        div(class="col-6 offset-3")
+            div(class = 'card')
+                div(class = 'card-header')
+                    h1 Bienvenido #{nombre} #{aPaterno} #{aMaterno}
+                div(class = 'card-body')
+
+                    img(src= imagen_name, alt="" class='card-img-top')
+                    table(class="table table-hover table-dark text-center")
+                        thead
+                            th
+                            th 
+                        tbody
+                            tr
+                                td Nombre
+                                td #{nombre}
+                            tr
+                                td Apellido Paterno
+                                td #{aPaterno}
+                            tr
+                                td Apellido Materno
+                                td #{aMaterno}
+                            tr
+                                td Fecha de Nacimiento
+                                td #{fNacimiento}
+                            tr
+                                td Telefono
+                                td #{telefono}
+                            tr
+                                td correo
+                                td #{correo}
+                            tr
+                                td sexo
+                                #Sexo
+                                if sexo == 'M'
+                                    td Masculino
+                                else
+                                    td Femenino
+                            tr
+                                td Direccion
+                                td #{calle} #{numero} CP: #{cp}
+                            tr
+                                td Lugar
+                                td #{ciudad}, #{estado}
+                            tr
+                                td #[button(class="btn btn-primari") Editar]
+                            
+                            

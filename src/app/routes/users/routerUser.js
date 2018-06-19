@@ -257,6 +257,31 @@ router.post('/EditarPerfil',(req,res)=>{
 
     
 });
+
+router.get('/paquetes',(req,res)=>{
+    var sql = 'select p.idPaquete, p.nombre as nombrePaquete, p.descripcion, p.estadia, p.total, h.idHotel, h.nombreCadena, h.nombreHotel, h.ciudad, h.estrellas,h.imagen_name as imagenHotel, hab.idHabitacion ,hab.capacidad,hab.tipo,hab.imagen_name as imagenHabitacion, a.idAerolinea, a.imagen_name as imagenAerolinea from ventaPaquete vp inner join (habitacion hab inner join (hotel h inner join (paquete p inner join aerolinea a on a.idAerolinea=p.idAerolinea) on p.idHotel=h.idHotel) on hab.idHotel = h.idHotel) on p.idPaquete = vp.idPaquete where idUsuario=? ;';
+    conn.query(sql,[req.session.idUsuario],(err,result,field)=>{
+        if(err) return res.status(404).send(err);
+        res.render('./users/paquetes',{
+            result
+        });
+    });
+});
+
+router.get('/ConocerPaqueteVendido/:idPaquete',(req,res)=>{
+    var idPaqueteSplit = req.params.idPaquete.split(':'); 
+    var idPaquete = parseInt(idPaqueteSplit[1]);
+
+    sql = 'select p.idPaquete, p.nombre as nombrePaquete, p.descripcion, p.estadia, p.total, h.idHotel, h.nombreCadena, h.nombreHotel, h.ciudad, h.estrellas,h.imagen_name as imagenHotel, hab.idHabitacion ,hab.capacidad,hab.tipo,hab.imagen_name as imagenHabitacion, a.idAerolinea, a.imagen_name as imagenAerolinea from habitacion hab inner join (hotel h inner join (paquete p inner join aerolinea a on a.idAerolinea=p.idAerolinea) on p.idHotel=h.idHotel) on hab.idHotel = h.idHotel where idPaquete= ? ;';
+    conn.query(sql,[idPaquete],(err,result,field)=>{
+        if(err) return res.status(500).send(err);
+        console.log('Llego');
+        res.render('./users/MuestraPaqueteVendido',{
+            result
+        });
+        
+    });
+});
 //---------------------------------------------------------------------
 // ------------------------------LOGOUT------------------------------
 router.get('/logout',(req,res)=>{

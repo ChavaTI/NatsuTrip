@@ -1,0 +1,43 @@
+extends ./commons/layaoutSession.pug
+
+
+block conteiner
+    article(class = 'row')
+        div(class = 'col-6 offset-3 text-center mb-5')
+            div(class = 'card')
+                div(class = 'card-header')
+                   h1 #{result[0].nombrePaquete}
+                div(class = 'card-body') 
+                    p #{result[0].descripcion}
+                    #estadia
+                    if result[0].estadia == '3d'
+                        p Estadia 3 días.
+                    else if result[0].estadia == '1s'
+                        p Estadia 1 semana.
+                    else if result[0].estadia == '2s'
+                        p Estadia 2 semanas.
+                    
+                    h2 Hotel #{result[0].nombreHotel}
+                    h3 Cadena Hotelera #{result[0].nombreCadena}
+                    p estrellas #{result[0].estrellas}
+
+                    img(src= result[0].imagenHotel, alt="" class="card-img-top mb-3")
+
+                    p Capacidad #{result[0].capacidad}
+                    #tipo
+                    if result[0].tipo == 'se'
+                        p Tipo de habitacion Sencilla
+                    else if result[0].tipo == 'sj'
+                        p Tipo de habitacion Suit Junnior
+                    else if result[0].tipo == 'sd'
+                        p Tipo de habitacion Suit Doble
+                    else if result[0].tipo == 'sp'
+                        p Tipo de habitacion Suit Precidencial
+                    img(src= result[0].imagenHabitacion, alt="" class='card-img-top mb-3')
+
+                    h4 Aerolinea.
+                        img(src= result[0].imagenAerolinea, alt="" class='card-img-top mb-3') 
+
+                    p Total a pagar. $ #{result[0].total}
+                div(class='card-footer')
+                    
